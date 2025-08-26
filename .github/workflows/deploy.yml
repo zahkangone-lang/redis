@@ -1,6 +1,5 @@
 name: Deploy Docker Container
 
-# Exécution uniquement sur votre runner self-hosted
 on:
   workflow_dispatch:
 
@@ -8,23 +7,19 @@ jobs:
   deploy:
     runs-on: self-hosted
     steps:
-      # 1️⃣ Vérifier le code du dépôt (optionnel si besoin)
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2️⃣ Connexion à Docker Hub
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # 3️⃣ Pull de l'image Docker depuis Docker Hub
       - name: Pull Docker image
         run: |
           docker pull tresorkangone/redis:latest
 
-      # 4️⃣ Lancer le conteneur Docker
       - name: Run Docker container
         run: |
           docker run -d --name redis-container -p 6379:6379 tresorkangone/redis:latest
