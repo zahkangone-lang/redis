@@ -21,7 +21,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build -t tresorkangone/redis:latest .
+          docker build --security-opt seccomp=unconfined -t tresorkangone/redis:latest .
 
       - name: Push Docker image
         run: |
