@@ -5,7 +5,6 @@ on:
       - main
 
 jobs:
-
   build_and_push:
     name: Build Docker Image & Push to Docker Hub
     runs-on: ubuntu-latest
