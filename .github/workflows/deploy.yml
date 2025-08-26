@@ -21,7 +21,7 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker buildx build --load --security=insecure -t tresorkangone/redis:latest .
+          DOCKER_BUILDKIT=0 docker build -t tresorkangone/redis:latest .
 
       - name: Push Docker image
         run: |
