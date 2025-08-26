@@ -28,7 +28,7 @@ jobs:
 
       # 3️⃣ Build Docker image
       - name: Build Docker image
-        run: docker build -t tresorkangone/redis:latest .
+        run: docker build -t kangotrex/redis:latest .
 
       # 4️⃣ Push Docker image
       - name: Push Docker image
