@@ -21,7 +21,9 @@ jobs:
 
       - name: Build Docker image
         run: |
-          docker build --runtime=kata-runtime -t tresorkangone/redis:latest .
+          DOCKER_BUILDKIT=1 
+          docker build --security=insecure -t tresorkangone/redis:latest .
+
 
       - name: Push Docker image
         run: |
