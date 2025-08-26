@@ -46,7 +46,7 @@ jobs:
       # 1️⃣ Pull l'image depuis Docker Hub
       - name: Pull Docker image
         run: |
-          docker login -u ${{ secrets.DOCKERHUB_TOKEN }} -p ${{ secrets.DOCKERHUB_USERNAME }}
+          docker login -u ${{ secrets.DOCKERHUB_TOKEN }} -p ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
           docker pull kangotrex/redis:latest
 
       # 2️⃣ Stop et supprimer l'ancien container s'il existe
