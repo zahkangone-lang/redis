@@ -1,58 +1,30 @@
-name: Build and Deploy Redis
+name: Deploy Docker Container
 
-# Déclenchement à chaque push sur main
+# Exécution uniquement sur votre runner self-hosted
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
-  # -------------------------------
-  # Build & push Docker image
-  # -------------------------------
-  build_and_push:
-    name: Build Docker Image & Push to Docker Hub
-    runs-on: ubuntu-latest
-
+  deploy:
+    runs-on: self-hosted
     steps:
-      # 1️⃣ Checkout le code
+      # 1️⃣ Vérifier le code du dépôt (optionnel si besoin)
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2️⃣ Login sur Docker Hub
+      # 2️⃣ Connexion à Docker Hub
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # 3️⃣ Build Docker image
-      - name: Build Docker image
-        run: docker build -t kangotrex/redis:latest .
-
-      # 4️⃣ Push Docker image
-      - name: Push Docker image
-        run: docker push kangotrex/redis:latest
-
-  # -------------------------------
-  # Deploy on Rocky Linux runner
-  # -------------------------------
-  deploy_to_runner:
-    name: Deploy on Rocky Linux Runner
-    runs-on: self-hosted
-    needs: build_and_push
-
-    steps:
-      # 1️⃣ Pull l'image depuis Docker Hub
+      # 3️⃣ Pull de l'image Docker depuis Docker Hub
       - name: Pull Docker image
         run: |
-          docker login -u ${{ secrets.DOCKERHUB_TOKEN }} --password-stdin
-          docker pull kangotrex/redis:latest
+          docker pull tresorkangone/redis:latest
 
-      # 2️⃣ Stop et supprimer l'ancien container s'il existe
-      - name: Stop existing container
-        run: docker rm -f redis || true
-
-      # 3️⃣ Run le container Redis
-      - name: Run Redis container
-        run: docker run -d --name redis -p 6379:6379 kangotrex/redis:latest
+      # 4️⃣ Lancer le conteneur Docker
+      - name: Run Docker container
+        run: |
+          docker run -d --name redis-container -p 6379:6379 tresorkangone/redis:latest
