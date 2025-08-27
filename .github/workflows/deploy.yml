@@ -1,27 +1,29 @@
-name: Build and Deploy Redis
-
+name: Deploy with Docker Compose
 on:
   push:
     branches:
       - main
-
 jobs:
-  deploy_to_runner:
-    name: Deploy on Rocky Linux Runner
+  deploy:
     runs-on: self-hosted
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Pull Docker image
+      #- name: Pull Docker image
+      #  run: |
+      #    docker pull tresorzahhabib/redis:latest
+      - name: Navigate to project folder
+        run: cd /home/tresor/actions-runner1/_work/redis/redis
+      - name: Pull latest images from compose
         run: |
-          docker pull kangotrex/redis:latest
-      - name: Run Docker container
+          cd /home/tresor/actions-runner1/_work/redis/redis
+          docker compose pull
+      - name: Recreate and start containers
         run: |
-          docker run -d --name redis-container -p 6379:6379 --security-opt seccomp=unconfined kangotrex/redis:latest
+          cd /home/tresor/actions-runner1/_work/redis/redis
+          docker compose up -d --remove-orphans
