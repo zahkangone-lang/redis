@@ -3,8 +3,8 @@ services:
     build:
       context: ./
       dockerfile: ./Dockerfile
-    image: trex18/redis:latest
-    container_name: redis
+    image: tresor/redis:latest
+    container_name: redis-tresor
     restart: unless-stopped
     volumes:
       - redis:/data
