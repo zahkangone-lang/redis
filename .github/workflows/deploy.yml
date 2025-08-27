@@ -3,45 +3,19 @@ on:
   push:
     branches:
       - main
-
 jobs:
   build_and_push:
     name: Build Docker Image & Push to Docker Hub
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-
       - name: Build Docker image
         run: docker build -t tresorzahhabib/redis:latest .
-
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-
       - name: Push Docker image
         run: docker push tresorzahhabib/redis:latest
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build_and_push
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Pull Docker image
-        run: |
-          docker pull tresorzahhabib/redis:latest
-
-      - name: Run Docker container
-        run: |
-          docker run -d --name redis-container -p 6379:6379 kangotrex/redis:latest
