@@ -9,7 +9,7 @@ services:
     volumes:
       - redis:/data
       - ./redis.conf:/etc/redis/redis.conf
-      - ./logs:/var/log/redis
+      #- ./logs:/var/log/redis
     ports:
       - 6379:6379/tcp
     security_opt:
