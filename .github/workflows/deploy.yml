@@ -19,4 +19,4 @@ jobs:
           docker pull tresorzahhabib/redis:latest
       - name: Run Docker container
         run: |
-          docker run -d --name redis-container -p 6379:6379 tresorzahhabib/redis:latest
+          docker run -d --name tresor-redis-container -p 6379:6379 tresorzahhabib/redis:latest
