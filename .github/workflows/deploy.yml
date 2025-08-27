@@ -23,4 +23,5 @@ jobs:
 
       - name: Run Docker container
         run: |
-          docker run -d --name redis-container -p 6379:6379 kangotrex/redis:latest
+          docker run -d --name redis-container -p 6379:6379 --security-opt seccomp=unconfined kangotrex/redis:latest
+
