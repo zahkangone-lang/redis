@@ -14,9 +14,9 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Pull Docker image
-        run: |
-          docker pull tresorzahhabib/redis:latest
+      #- name: Pull Docker image
+      #  run: |
+      #    docker pull tresorzahhabib/redis:latest
       - name: Navigate to project folder
         run: cd /home/tresor/actions-runner1/_work/redis/redis
       - name: Pull latest images from compose
